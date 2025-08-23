@@ -1,0 +1,247 @@
+<!--
+Muse Web Template
+Single-file HTML/CSS/JS template pour présenter un portfolio / "muse"
+Utilisation: sauvegarder comme `index.html` et ouvrir dans un navigateur.
+Aucune dépendance externe requise (Google Fonts facultatif, retiré si besoin).
+-->
+
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MNRDC — Portfolio</title>
+  <meta name="description" content="Template Muse : portfolio créatif en HTML/CSS/JS" />
+  <!-- Google Font (optionnel) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0f1724;
+      --card: #0b1220;
+      --muted: #9aa4b2;
+      --accent: #7c5cff;
+      --glass: rgba(255,255,255,0.04);
+      --radius: 14px;
+      --maxw: 1100px;
+      color-scheme: dark;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    /* Light theme variables (toggle with .light on body) */
+    body.light{ --bg:#f7f8fb; --card:#ffffff; --muted:#586070; --accent:#6b46ff; --glass: rgba(10,10,10,0.04); color-scheme: light }
+
+    *{box-sizing:border-box}
+    html,body{height:100%; margin:0; background: linear-gradient(180deg,var(--bg), #071021 120%); color: #e6eef8;}
+    body{display:flex; align-items:center; justify-content:center; padding:36px;}
+
+    .site{width:100%; max-width:var(--maxw);}
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px}
+    .logo{display:flex; gap:12px; align-items:center}
+    .logo .mark{width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,var(--accent), #3ca6ff); display:flex;align-items:center;justify-content:center; font-weight:800}
+    .logo h1{font-size:18px; margin:0}
+    nav{display:flex; gap:16px; align-items:center}
+    nav a{color:var(--muted); text-decoration:none; font-weight:600}
+    .cta{background:linear-gradient(90deg,var(--accent), #3ca6ff); padding:10px 14px; border-radius:12px; font-weight:700; color:white; text-decoration:none}
+
+    .hero{display:grid; grid-template-columns:1fr 360px; gap:28px; align-items:stretch; margin-bottom:28px}
+    .card{background:var(--card); border-radius:var(--radius); padding:22px; box-shadow: 0 6px 20px rgba(2,6,23,0.6);}
+    .intro h2{margin:0 0 8px 0; font-size:28px}
+    .intro p{margin:0; color:var(--muted)}
+
+    .stats{display:flex; gap:12px; margin-top:18px}
+    .stat{background:var(--glass); padding:10px 12px; border-radius:10px; font-weight:600}
+
+    .muse-card{display:flex; flex-direction:column; gap:12px}
+    .muse-card .avatar{height:220px; background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08)); border-radius:12px; display:flex; align-items:center; justify-content:center}
+    .muse-card .meta{display:flex; justify-content:space-between; align-items:center}
+
+    .gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .gallery img{width:100%; height:170px; object-fit:cover; border-radius:10px; cursor:pointer; display:block}
+
+    .about, .contact{margin-top:20px}
+
+    footer{margin-top:28px; color:var(--muted); font-size:14px; text-align:center}
+
+    /* Modal lightbox */
+    .lightbox{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(2,6,23,0.7); z-index:1000}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:90%; max-height:80%; border-radius:12px}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .gallery{grid-template-columns:repeat(2,1fr)}
+      body{padding:18px}
+    }
+    @media (max-width:520px){
+      nav{display:none}
+      .gallery{grid-template-columns:1fr}
+      .logo .mark{width:40px;height:40px}
+    }
+
+    /* Small utility */
+    .muted{color:var(--muted)}
+    .flex{display:flex}
+    .gap-8{gap:8px}
+    button.icon{background:transparent;border:0;color:var(--muted);cursor:pointer;font-weight:700}
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header>
+      <div class="logo">
+        <div class="mark">M</div>
+        <div>
+          <h1>Muse</h1>
+          <div class="muted">Portfolio créatif</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#works">Travaux</a>
+        <a href="#about">À propos</a>
+        <a href="#contact">Contact</a>
+        <a class="cta" href="#contact">Collaborer</a>
+        <button id="themeToggle" class="icon" title="Basculer thème">☼</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="card intro">
+          <h2>Bonjour — je suis ta Muse</h2>
+          <p>Création visuelle, expérimentation numérique et concept design. Je joue entre formes, couleurs et récits.</p>
+          <div class="stats">
+            <div class="stat">Projets: 28</div>
+            <div class="stat">Clients: 12</div>
+            <div class="stat">Expos: 3</div>
+          </div>
+
+          <div id="works" class="about">
+            <h3 style="margin-top:18px">Travaux récents</h3>
+            <div class="gallery" aria-hidden="false">
+              <img src="https://picsum.photos/seed/p1/800/600" alt="Artwork 1" data-full="https://picsum.photos/seed/p1/1400/1000">
+              <img src="https://picsum.photos/seed/p2/800/600" alt="Artwork 2" data-full="https://picsum.photos/seed/p2/1400/1000">
+              <img src="https://picsum.photos/seed/p3/800/600" alt="Artwork 3" data-full="https://picsum.photos/seed/p3/1400/1000">
+              <img src="https://picsum.photos/seed/p4/800/600" alt="Artwork 4" data-full="https://picsum.photos/seed/p4/1400/1000">
+              <img src="https://picsum.photos/seed/p5/800/600" alt="Artwork 5" data-full="https://picsum.photos/seed/p5/1400/1000">
+              <img src="https://picsum.photos/seed/p6/800/600" alt="Artwork 6" data-full="https://picsum.photos/seed/p6/1400/1000">
+            </div>
+          </div>
+        </div>
+
+        <aside class="card muse-card">
+          <div class="avatar">
+            <img src="https://picsum.photos/seed/artist/600/400" alt="Portrait" style="width:100%; height:100%; object-fit:cover; border-radius:10px">
+          </div>
+          <div class="meta">
+            <div>
+              <div style="font-weight:800">Nom Prénom</div>
+              <div class="muted">Designer / Artiste</div>
+            </div>
+            <div style="text-align:right">
+              <div class="muted">Basé à</div>
+              <div style="font-weight:700">Paris</div>
+            </div>
+          </div>
+
+          <div>
+            <p class="muted">Petit bloc bio — décris ton univers en 2 lignes. Exemple: J'explore la rencontre entre data, couleur et matière pour créer des récits visuels.</p>
+          </div>
+
+          <div class="flex gap-8" style="margin-top:auto">
+            <a class="cta" href="#contact">Engager</a>
+            <a href="#" class="muted" style="align-self:center; text-decoration:none">CV</a>
+          </div>
+        </aside>
+      </section>
+
+      <section id="about" class="card">
+        <h3>À propos</h3>
+        <p class="muted">Texte de présentation plus long. Parle de ton approche, skills, expositions, résidences, et collaborations. Procure une lecture claire, avec des liens vers des collections en ligne ou publications.</p>
+      </section>
+
+      <section id="contact" class="card contact">
+        <h3>Contact</h3>
+        <p class="muted">Tu peux inclure un formulaire ou simplement une adresse mail. Le formulaire ci-dessous est statique — connecte-le à ton backend ou service (Formspree, Netlify Forms, etc.).</p>
+        <form id="contactForm" style="display:flex; flex-direction:column; gap:10px; margin-top:12px">
+          <input name="name" placeholder="Ton nom" required style="padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:inherit">
+          <input name="email" type="email" placeholder="Email" required style="padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:inherit">
+          <textarea name="message" placeholder="Message" rows="4" required style="padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:inherit"></textarea>
+          <div style="display:flex; gap:10px">
+            <button type="submit" class="cta">Envoyer</button>
+            <button type="button" id="clearForm" class="icon">Effacer</button>
+          </div>
+        </form>
+      </section>
+
+    </main>
+
+    <footer>
+      © <span id="year"></span> Muse — Tous droits réservés
+    </footer>
+  </div>
+
+  <!-- Lightbox modal -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true">
+    <img id="lightboxImg" src="" alt="Agrandissement">
+  </div>
+
+  <script>
+    // Small interactive behaviors: theme toggle, lightbox, form handling
+    (function(){
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      const saved = localStorage.getItem('muse-theme') || 'dark';
+      if(saved === 'light') body.classList.add('light');
+      themeToggle.addEventListener('click', ()=>{
+        body.classList.toggle('light');
+        localStorage.setItem('muse-theme', body.classList.contains('light') ? 'light' : 'dark');
+      });
+
+      // Lightbox for gallery
+      const galleryImgs = document.querySelectorAll('.gallery img');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+
+      galleryImgs.forEach(img=>{
+        img.addEventListener('click', ()=>{
+          const full = img.dataset.full || img.src;
+          lightboxImg.src = full;
+          lightbox.classList.add('open');
+        });
+      });
+
+      lightbox.addEventListener('click', (e)=>{
+        if(e.target === lightbox || e.target === lightboxImg){
+          lightbox.classList.remove('open');
+          lightboxImg.src = '';
+        }
+      });
+
+      // Contact form (demo only)
+      const contactForm = document.getElementById('contactForm');
+      const clearForm = document.getElementById('clearForm');
+      contactForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        // Simple validation + fake send
+        const form = new FormData(contactForm);
+        const payload = Object.fromEntries(form.entries());
+        alert('Merci ' + (payload.name||'') + " — message simulé envoyé. Connecte le formulaire à un backend pour l'envoyer réellement.");
+        contactForm.reset();
+      });
+      clearForm.addEventListener('click', ()=> contactForm.reset());
+
+      // Year in footer
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Small accessibility tweak: focus trap for lightbox (basic)
+      document.addEventListener('keydown', (e)=>{
+        if(e.key === 'Escape' && lightbox.classList.contains('open')){
+          lightbox.classList.remove('open'); lightboxImg.src = '';
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>
