@@ -5,6 +5,7 @@ from sqlalchemy import and_ , not_ , or_
 from sqlalchemy.orm import joinedload
 from flask_wtf import FlaskForm 
 from wtforms import StringField , SubmitField
+from werkzeug.security import generate_password_hash , check_password_hash 
 
 
 
@@ -94,9 +95,9 @@ def login():
         email = request.form.get('email')
         pwd   = request.form.get('pwd') 
 
-        use = User.query.filter_by(email = email , password = pwd).first()
+        use = User.query.filter_by(email = email).first()
 
-        if use :
+        if use and check_password_hash(use.password,pwd) :
             session['session'] = True 
             session['id'] = use.id
             session['name'] = use.name
@@ -169,7 +170,7 @@ def adduser():
             fonction = 'sous-admin' 
         
         
-            password = 12345
+            password = generate_password_hash('12345')
             if session['role'] == 2:
                 roles = request.form['role']
                 muse    = request.form['muse']
