@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate 
 from sqlalchemy import and_ , not_ , or_
 from sqlalchemy.orm import joinedload
+from flask_wtf import FlaskForm 
+from wtforms import StringField , SubmitField
 
 
 
@@ -28,7 +30,7 @@ class Muse(db.Model):
 
 #
 # muse par defaut information
-#  insert into muse(nom,province)values('mnrdc','kinshasa') 
+
 
 # table user
 
@@ -46,7 +48,7 @@ class User(db.Model):
 
 #
 # insert defaut user 
-# insert into users(name,email,password,muse_id,role_id) values('admin','admin@gmail.com', 'admin@', 1,1);
+
     
    
     
@@ -74,7 +76,7 @@ class Role(db.Model):
 #
 #
 # role par defaut
-# insert into role(lib_role) values('admin'),('sous-admin'),('consutant(e)') ,('invite'), ('archiviste');
+#
 
 #
 #
